@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swansea ISOC Discount Card</title>
+<meta name="description" content="Discounts for Swansea ISOC members at partner businesses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #14284A;
+    --navy-deep: #0D1C34;
+    --sand: #E7D8B4;
+    --sand-pale: #F6EFDE;
+    --paper: #FBF8F2;
+    --ink: #1B2233;
+    --ink-soft: #5C6270;
+    --card: #FFFFFF;
+    --border: #E4DCC9;
+    --shadow: 0 1px 2px rgba(20,40,74,0.04), 0 4px 14px rgba(20,40,74,0.06);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope', -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    background:var(--navy);
+    color:var(--sand-pale);
+    padding:2.4rem 1.5rem 2rem;
+    text-align:center;
+  }
+  .crest{ width:88px; height:88px; margin:0 auto 0.7rem; object-fit:contain; }
+  header h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.55rem;
+    margin:0 0 0.3rem;
+  }
+  header p{ margin:0; color:var(--sand); font-size:0.92rem; }
+
+  main{ max-width:900px; margin:0 auto; padding:1.6rem 1.1rem 3rem; }
+
+  .search{
+    display:block;
+    width:100%;
+    padding:0.7rem 1rem;
+    border:1.5px solid var(--border);
+    border-radius:10px;
+    font-family:'Manrope', sans-serif;
+    font-size:0.95rem;
+    background:var(--card);
+    margin-bottom:1rem;
+    color:var(--ink);
+  }
+  .search:focus{ outline:none; border-color:var(--navy); }
+
+  .filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.5rem;
+    margin-bottom:1.6rem;
+  }
+  .filter-btn{
+    font-family:'Manrope', sans-serif;
+    font-size:0.83rem;
+    font-weight:600;
+    padding:0.4rem 0.9rem;
+    border-radius:999px;
+    border:1.5px solid var(--border);
+    background:var(--card);
+    color:var(--ink-soft);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .filter-btn:hover{ border-color:var(--navy); }
+  .filter-btn.active{
+    background:var(--navy);
+    border-color:var(--navy);
+    color:var(--sand-pale);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+    gap:1rem;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .card-photo{
+    width:100%;
+    height:110px;
+    object-fit:cover;
+    display:block;
+    background:var(--sand-pale);
+  }
+  .card-avatar{
+    width:100%;
+    height:110px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--sand-pale);
+    color:var(--navy);
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.8rem;
+  }
+  .card-body{
+    padding:0.95rem 1rem 1.1rem;
+    display:flex;
+    flex-direction:column;
+    gap:0.5rem;
+    flex:1;
+  }
+  .card-top{
+    display:flex;
+    align-items:flex-start;
+    gap:0.6rem;
+  }
+  .card-logo{
+    width:34px; height:34px;
+    border-radius:8px;
+    object-fit:cover;
+    border:1px solid var(--border);
+    flex-shrink:0;
+    background:#fff;
+  }
+  .card-name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.02rem;
+    color:var(--ink);
+    line-height:1.25;
+  }
+  .card-category{
+    font-size:0.72rem;
+    font-weight:600;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .card-pct{
+    align-self:flex-start;
+    background:var(--sand);
+    color:var(--navy-deep);
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:0.92rem;
+    padding:0.3rem 0.7rem;
+    border-radius:7px;
+  }
+  .card-note{
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    line-height:1.4;
+    margin-top:auto;
+  }
+
+  .empty{
+    text-align:center;
+    color:var(--ink-soft);
+    padding:2.5rem 1rem;
+    font-size:0.92rem;
+  }
+
+  footer{
+    text-align:center;
+    padding:1.5rem 1rem 2.4rem;
+    color:var(--ink-soft);
+    font-size:0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="crest" src="logo.png" alt="Swansea ISOC logo">
+  <h1>Swansea ISOC Discount Card</h1>
+  <p>Show your membership to claim these rates</p>
+</header>
+
+<main>
+  <input class="search" id="search" type="text" placeholder="Search businesses...">
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none;">No businesses match your search.</div>
+</main>
+
+<footer>Swansea University Islamic Society &middot; Updated regularly</footer>
+
+<script>
+  // ── EDIT BELOW TO ADD COMPANIES ──────────────────────────────────────
+  // Each entry:
+  //   name      – business name (required)
+  //   category  – e.g. "Food & Drink", "Retail", "Services" (required)
+  //   pct       – the discount text, e.g. "15% off" (required)
+  //   note      – small print, optional, leave "" if none
+  //   logo      – small square logo image URL or path, optional, leave "" if none
+  //   photo     – wider banner photo URL or path, optional, leave "" if none
+  //
+  // For logo/photo: either paste a direct image URL, or upload the image
+  // file into a "logos" or "photos" folder in the GitHub repo and use a
+  // relative path like "logos/kebabhouse.png".
+  // If no logo/photo is given, a card shows the business's initials instead.
+
+  const discounts = [
+    {
+      name: "Example Kebab House",
+      category: "Food & Drink",
+      pct: "15% off",
+      note: "Dine-in only, not with other offers",
+      logo: "",
+      photo: ""
+    },
+    {
+      name: "Example Coffee Co.",
+      category: "Food & Drink",
+      pct: "10% off",
+      note: "",
+      logo: "",
+      photo: ""
+    },
+    {
+      name: "Example Barbers",
+      category: "Retail",
+      pct: "20% off",
+      note: "Student ID required",
+      logo: "",
+      photo: ""
+    },
+    {
+      name: "Example Gym",
+      category: "Services",
+      pct: "£5 off monthly membership",
+      note: "",
+      logo: "",
+      photo: ""
+    }
+  ];
+  // ── STOP EDITING ──────────────────────────────────────────────────────
+
+  const grid = document.getElementById('grid');
+  const filtersEl = document.getElementById('filters');
+  const searchEl = document.getElementById('search');
+  const emptyEl = document.getElementById('empty');
+
+  const categories = ["All", ...new Set(discounts.map(d => d.category))];
+  let activeCategory = "All";
+  let searchTerm = "";
+
+  function initials(name){
+    return name.split(/\s+/).slice(0,2).map(w => w[0]).join('').toUpperCase();
+  }
+
+  function render(){
+    const term = searchTerm.trim().toLowerCase();
+    const filtered = discounts.filter(d => {
+      const matchesCategory = activeCategory === "All" || d.category === activeCategory;
+      const matchesSearch = !term || d.name.toLowerCase().includes(term);
+      return matchesCategory && matchesSearch;
+    });
+
+    grid.innerHTML = "";
+    emptyEl.style.display = filtered.length ? "none" : "block";
+
+    filtered.forEach(d => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const media = d.photo
+        ? `<img class="card-photo" src="${d.photo}" alt="${d.name}" onerror="this.outerHTML='<div class=&quot;card-avatar&quot;>${initials(d.name)}</div>'">`
+        : `<div class="card-avatar">${initials(d.name)}</div>`;
+
+      const logo = d.logo
+        ? `<img class="card-logo" src="${d.logo}" alt="" onerror="this.style.display='none'">`
+        : "";
+
+      card.innerHTML = `
+        ${media}
+        <div class="card-body">
+          <div class="card-top">
+            ${logo}
+            <div>
+              <div class="card-name">${d.name}</div>
+              <div class="card-category">${d.category}</div>
+            </div>
+          </div>
+          <div class="card-pct">${d.pct}</div>
+          ${d.note ? `<div class="card-note">${d.note}</div>` : ""}
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  categories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (cat === "All" ? " active" : "");
+    btn.textContent = cat;
+    btn.addEventListener('click', () => {
+      activeCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render();
+    });
+    filtersEl.appendChild(btn);
+  });
+
+  searchEl.addEventListener('input', e => {
+    searchTerm = e.target.value;
+    render();
+  });
+
+  render();
+</script>
+
+</body>
+</html>
